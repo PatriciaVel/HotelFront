@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<style>
+		table,
+		th,
+		td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+	</style>
+
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<link href="Style/Style.css" rel="stylesheet" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript" src="js/funciones.js"></script>
+</head>
+
+<body onload="ConsultarFKRoomsMessage(),ConsultarFKClientMessage(),ConsultarFKCategoryRoom()">
+	<!-- <body onload="ConsultarFKCategoryRoom()"> -->
+	
+	<div class="inicio-wrap">
+		<div class="inicio-html">
+			<label >Registro de Categoría </label>
+			<input type="hidden" id="IdCat">
+			Nombre: <input type="text" id="nameCat">
+			Descripción: <input type="text" id="descriptionCat" >
+					<br>
+					<br>
+					<button onclick="createCategory()"> Registrar Categoría </button>
+					<button onclick="verRegistrosCategory()">Ver registros de Categoría</button>
+					<button onclick="actualizarCategory()" disabled="true" id="btnActuCat">Actualizar Categoría</button> 
+					<br>
+					<div>
+						<table>
+							<tbody id="verDatosCategory"></tbody>
+						</table>
+					</div>
+		
+	
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Registro de habitación </h3>
+			<input type="hidden" id="IdRoom">
+			Nombre: <input type="text" id="nameRoom" maxlength="45"><br>
+			Hotel: <input type="text" id="hotelRoom" maxlength="45"><br>
+			Estrellas: <input type="number" id="starsRoom" maxlength="1"><br>
+			Descripción: <input type="text" id="descriptionRoom" maxlength="250"><br>
+			Categoría: <select id="selectCategories"> </select><br>
+			<br>
+			<br>
+			<button onclick="createRoom()"> Registrar habitación </button>
+			<button onclick="verRegistrosRoom()">Ver registros de habitación</button>
+			<button onclick="actualizarRoom()" disabled="true" id="btnActuRoom">Actualizar habitación</button>
+			<br> 
+			<div>
+				<table>
+					<tbody id="verDatosRoom"></tbody>
+				</table>
+			</div>
+			<br>
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Registro de clientes</h3>
+			<input type="hidden" id="idCli">
+			Nombre: <input type="text" id="nameCli"  maxlength="250"><br>
+			Correo: <input type="emai" id="emailCli"  maxlength="45"><br>
+			Edad: <input type="number" id="ageCli"  min=1 max=102><br>
+			Contraseña: <input type="password" id="passwordCli" placeholder="***" maxlength="45"><br>
+			<br>
+			<br>
+			<button onclick="createClient()"> Registrar cliente </button>
+			<button onclick="verRegistrosClient()">Ver registros de Cliente</button>
+			<button onclick="actualizarClient()" disabled="true" id="btnActuClient">Actualizar cliente</button>
+			<br>
+			<div>
+				<table>
+					<tbody id="verDatosClient"></tbody>
+				</table>
+			</div>
+			<br>
+			<br>
+			<br>
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Registro de mensajes</h3>
+			<input type="hidden" id="messageID">
+			Mensaje: <input type="text" id="messageText" placeholder="Mensaje"><br>
+			Habitación<select id="selectRooms"> </select><br>
+			Cliente<select id="selectClients">	</select>
+			<br>
+			<br>
+			<button onclick="createMessage()"> Registrar mensajes </button>
+			<button onclick="verRegistrosMessage()">Ver registros de Mensajes</button>
+			<button onclick="actualizarMessage()" disabled="true" id="btnActuMessage">Actualizar Mensaje</button> 
+			<br>
+			<div>
+				<table>
+					<tbody id="verDatosMessage"></tbody>
+				</table>
+			</div>
+			
+			<br>
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Registro de Reservaciones</h3>
+			<input type="hidden" id="idReservation">
+			Fecha Inicio: <input type="date" id="fechaInicio" placeholder="Fecha Inicio"><br>
+			Fecha Devolución <input type="date" id="fechaDev" placeholder="Fecha Devolución" ><br>
+			Cliente<select id="selectClientsRese">	</select><br>
+			Habitación<select id="selectRoomsRese"> </select><br>
+			<br>
+			<br>
+			<button onclick="createReservation()"> Registrar Reservación </button>
+			<button onclick="verRegistrosReservation()">Ver registros de Reservaciones</button>
+			<button onclick="actualizarReservation()" disabled="true" id="btnActuReservation">Actualizar Reservación</button>
+			<br>
+			<div>
+				<table>
+					<tbody id="verDatosReservation"></tbody>
+				</table>
+			</div>
+
+
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Conteo de Reservas</h3>
+			Ingrese el intervalo de tiempo en el que desea conocer la cantidad de reservas realizadas.<br>
+			<input type="date" id="RstarDate" placeholder="descripcion">
+			<input type="date" id="RdevolutionDate" placeholder="descripcion">
+			<button onclick="traerReporteDate()">Reporte por fecha </button>
+			<br>
+			<div>
+				<table>
+					<tbody id="resultadoDate"></tbody>
+				</table>
+			</div>
+
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Conteo de Reservascompletadas vs canceladas</h3>
+			<button onclick="traerReporteStatus()">Reporte Status Reservas </button>
+			<br>
+			<div>
+				<table>
+					<tbody id="resultadoStatus"></tbody>
+				</table>
+			</div>
+			
+			<h2>_______________________________________________________________________________________________________________
+			</h2>
+			<h3>Top mejores clientes</h3>
+			<button onclick="traerReporteClientes()">Reporte Clientes y Cantidad de reservas por cliente </button>
+			<br>
+			<div>
+				<table>
+					<tbody id="resultadoClientes"></tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>		
+</body>
+
+</html>
